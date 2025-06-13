@@ -6,5 +6,7 @@ export default {
     "**/scratch/**/*.test.mjs",
   ],
   moduleFileExtensions: ["js", "mjs"],
-  testEnvironment: 'node'
+  testEnvironment: 'node',
+  collectCoverage: true,
+  coverageReporters: ["json", "lcov", "text"],
 }

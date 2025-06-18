@@ -1,4 +1,3 @@
-import { describe, it, expect } from '@jest/globals'
 import { applyTransactions, createPurchaseEvent, getTransactionsBySymbol } from '../../src/domain/portfolio.mjs'
 
 describe('domain logic', () => {

@@ -12,14 +12,16 @@ export const createSellEvent = (symbol, shares, timestamp) => ({
   timestamp
 })
 
-export const applyTransactions = (txns) =>
-  txns.reduce((acc, txn) =>
-    ({
-      ...acc,
-      [txn.symbol]:
-        (acc[txn.symbol] ?? 0) +
-        (txn.type === 'purchase' ? txn.shares : -txn.shares)
-    }), {})
+const isSymbol = symbol => event => event.symbol === symbol
 
-export const getTransactionsBySymbol = (txns, symbol) =>
-  txns.filter(txn => txn.symbol === symbol)
+const applyTransaction = (acc, event) => {
+  const current = acc[event.symbol] || 0
+  const delta = event.type === 'purchase' ? event.shares : -event.shares
+  return { ...acc, [event.symbol]: current + delta }
+}
+
+export const applyTransactions = transactions =>
+  transactions.reduce(applyTransaction, {})
+
+export const getTransactionsBySymbol = (transactions, symbol) =>
+  transactions.filter(isSymbol(symbol))

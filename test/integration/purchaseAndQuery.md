@@ -1,4 +1,4 @@
-Add a new route to routes.mjs:
+For routes.mjs, add a new route.
 
 GET /position/:symbol
 
@@ -17,7 +17,11 @@ Provide new route support for addition to routes.mjs
 ==
 For portfolioService.mjs:
 
-Add a new function getPosition(symbol) that retrieves the position for a given symbol. It should call getTransactions(symbol), then pass the results to a new function in portfolio.md, getPositionFromTransactions(transactions), that calculates the position summary.
+Add a new async function getPosition(symbol) that retrieves the position for a given symbol. It should call getTransactions(symbol), then pass the results to a new function in portfolio.md, getPositionFromTransactions(transactions), that calculates the position summary.
+
+Design constraints:
+
+createPortfolioService(repo, clock) in portfolioService.mjs should be updated to include the new function.
 
 Examples:
 
@@ -30,7 +34,6 @@ set expectation that getTransactions("XYZ") returns an empty array
 throws an error with message "Symbol XYZ not held"
 
 ===
-
 For domain.test.mjs / portfolio.mjs:
 
 Generate a new function, getPositionFromTransactions, that takes on an array of transactions.

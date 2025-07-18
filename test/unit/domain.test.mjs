@@ -1,4 +1,4 @@
-import { createPurchaseEvent, createSellEvent, applyTransactions, getTransactionsBySymbol } from '../../src/domain/portfolio.mjs'
+import { createPurchaseEvent, createSellEvent, applyTransactions, getTransactionsBySymbol, getPositionFromTransactions } from '../../src/domain/portfolio.mjs'
 
 describe('portfolio', () => {
   it('increases shares on purchase', () => {
@@ -29,4 +29,18 @@ describe('portfolio', () => {
       { type: 'purchase', symbol: 'IBM', shares: 15, timestamp: '2025-06-03' }
     ])
   })
+
+  describe('getPositionFromTransactions', () => {
+    it('returns position summary for a single symbol', () =>
+      expect(
+        getPositionFromTransactions([
+          { type: 'purchase', symbol: 'AAPL', shares: 5, timestamp: '2025-06-01' },
+          { type: 'sell', symbol: 'AAPL', shares: 15, timestamp: '2025-06-02' }
+        ])
+      ).toEqual([
+        { symbol: 'AAPL', shares: 20, numberOfTransactions: 2 }
+      ])
+    )
+  })
 })
+

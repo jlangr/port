@@ -25,3 +25,15 @@ export const applyTransactions = transactions =>
 
 export const getTransactionsBySymbol = (transactions, symbol) =>
   transactions.filter(isSymbol(symbol))
+
+const sumShares = txns =>
+  txns.reduce((total, t) => total + t.shares, 0)
+
+const getSymbol = txns =>
+  txns[0]?.symbol
+
+export const getPositionFromTransactions = txns => ({
+  symbol: getSymbol(txns),
+  shares: sumShares(txns),
+  numberOfTransactions: txns.length
+})

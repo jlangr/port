@@ -11,3 +11,6 @@ When asked to generate, generate both production code as well as Jest code, unle
 •	No console.log.
 
 Consider the examples in the prompt as specifications for the Jest test code to be generated. NEVER code additional tests unless asked. Never generate code that is not need to meet the examples in the tests.
+
+Test against literals: When asked to generate a test, expectations should almost always be against a result expression, and not against the result of function call to another production function.
+

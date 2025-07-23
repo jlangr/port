@@ -1,10 +1,5 @@
 import { createPurchaseEvent, applyTransactions, getTransactionsBySymbol } from '../domain/portfolio.mjs'
 
-const getPosition = async (repo, symbol) =>
-  (await getTransactions(repo, symbol)).length === 0
-    ? (() => { throw new Error(`Symbol ${symbol} not held`) })()
-    : getPositionFromTransactions(await getTransactions(repo, symbol))
-
 export const createPortfolioService = (repo, clock) => ({
   purchase: async (symbol, shares) => {
     const timestamp = clock.now().toISOString()
@@ -19,5 +14,12 @@ export const createPortfolioService = (repo, clock) => ({
     const txs = await repo.getAllTransactions()
     return getTransactionsBySymbol(txs, symbol)
   },
-  getPosition: symbol => getPosition(repo, symbol)
+  getPosition: symbol => getPosition(repo, symbol),
 })
+
+const getPosition = async (repo, symbol) => {
+  const transactionsBySymbol = getTransactionsBySymbol(await repo.getAllTransactions(), symbol)
+  if (transactionsBySymbol.length === 0)
+    throw new Error(`Symbol ${symbol} not held`)
+  return getPositionFromTransactions(transactionsBySymbol)
+}

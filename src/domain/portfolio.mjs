@@ -23,30 +23,7 @@ const applyTransaction = (acc, event) => {
 export const applyTransactions = transactions =>
   transactions.reduce(applyTransaction, {})
 
-export const getTransactionsBySymbol = (transactions, symbol) =>
-  transactions.filter(isSymbol(symbol))
-
-export const getPositionFromTransactions = transactions =>
-  Object.values(
-    transactions.reduce(
-      (acc, { symbol, shares }) =>
-        acc[symbol]
-          ? {
-            ...acc,
-            [symbol]: {
-              symbol,
-              shares: acc[symbol].shares + shares,
-              numberOfTransactions: acc[symbol].numberOfTransactions + 1
-            }
-          }
-          : {
-            ...acc,
-            [symbol]: {
-              symbol,
-              shares,
-              numberOfTransactions: 1
-            }
-          },
-      {}
-    )
-  )
+export const getTransactionsBySymbol = (transactions, symbol) => {
+  console.log('getTransactionsBySymbol', symbol)
+  return transactions.filter(isSymbol(symbol))
+}

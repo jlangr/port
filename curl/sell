@@ -1,0 +1,11 @@
+#!/bin/sh
+
+SYMBOL=$1
+SHARES=$2
+
+ENDPOINT=http://localhost:3000/sell
+PAYLOAD="{\"symbol\":\"$SYMBOL\", \"shares\":$SHARES}"
+echo $PAYLOAD
+
+curl -H"Content-Type:application/json" -X POST $ENDPOINT -d "$PAYLOAD"
+

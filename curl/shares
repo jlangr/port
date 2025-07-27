@@ -1,0 +1,8 @@
+#!/bin/sh
+
+SYMBOL=$1
+ENDPOINT=http://localhost:3000/shares/$SYMBOL
+echo $ENDPOINT
+
+curl -H"Content-Type:application/json" -X GET $ENDPOINT
+
